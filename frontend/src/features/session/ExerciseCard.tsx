@@ -27,7 +27,7 @@ export function ExerciseCard({
 
   function handleSetDone() {
     onIncrement();
-    timer.start(); // inicia o descanso automaticamente
+    timer.start();
   }
 
   const mins = Math.floor(timer.remaining / 60);
@@ -35,62 +35,64 @@ export function ExerciseCard({
   const timeLabel = `${mins}:${secs.toString().padStart(2, "0")}`;
 
   return (
-    <article className={`exercise-card ${done ? "done" : ""}`}>
+    <article className={`exercise-card exercise-card-focus ${done ? "done" : ""}`}>
       <header className="exercise-card-head">
+        <p className="exercise-eyebrow">Exercício ativo</p>
         <h3>{exercise.name}</h3>
         <span className="target">
-          {exercise.targetReps} reps • {exercise.restSeconds}s descanso
+          Meta: {exercise.targetReps} reps • {exercise.targetSets} séries
         </span>
       </header>
 
-      {/* Contador de séries */}
-      <div
-        className="sets-counter"
-        role="group"
-        aria-label={`Séries de ${exercise.name}`}
-      >
+      <div className="sets-counter" role="group" aria-label={`Séries de ${exercise.name}`}>
         <button
           className="counter-btn"
           onClick={onDecrement}
           disabled={disabled || completedSets === 0}
           aria-label="Reduzir série concluída"
         >
-          −
+          −1 série
         </button>
-        <span className="sets-display" aria-live="polite">
-          {completedSets} / {exercise.targetSets}
-        </span>
+
+        <div className="sets-summary">
+          <span className="sets-display" aria-live="polite">
+            {completedSets} / {exercise.targetSets}
+          </span>
+          <span className="sets-text">{completedSets} de {exercise.targetSets} séries</span>
+        </div>
+
         <button
           className="counter-btn add"
           onClick={handleSetDone}
           disabled={disabled}
           aria-label="Adicionar série concluída"
         >
-          +
+          +1 série
         </button>
       </div>
 
-      {/* Timer de descanso */}
-      <div className="rest-timer" aria-live="assertive">
-        <span className={`rest-time ${timer.remaining === 0 ? "ended" : ""}`}>
-          ⏱️ {timeLabel}
-        </span>
-        <div className="rest-actions">
+      <div className="rest-block" aria-live="assertive">
+        <div className={`rest-circle ${timer.remaining === 0 ? "ended" : ""}`}>
+          <span className="rest-label">Descanso</span>
+          <span className="rest-value">{timeLabel}</span>
+        </div>
+
+        <div className="rest-actions" role="group" aria-label="Controles do descanso">
           {!timer.running ? (
             <button
               onClick={() => timer.start()}
               disabled={disabled}
               aria-label="Iniciar descanso"
             >
-              ▶
+              Iniciar descanso
             </button>
           ) : (
             <button onClick={timer.stop} aria-label="Pausar descanso">
-              ⏸
+              Pausar descanso
             </button>
           )}
           <button onClick={timer.reset} aria-label="Resetar descanso">
-            ↻
+            Resetar descanso
           </button>
         </div>
       </div>
