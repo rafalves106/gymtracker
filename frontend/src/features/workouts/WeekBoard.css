@@ -1,0 +1,87 @@
+.unassigned {
+  margin-bottom: 1.5rem;
+}
+
+.unassigned h3,
+.day-box h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.chip-list,
+.day-box-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+}
+
+.workout-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.6rem 0.9rem;
+  background: #4ade80;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 10px;
+  cursor: grab;
+  touch-action: none; /* essencial para o drag funcionar no mobile */
+  text-align: left;
+}
+
+.workout-chip:active {
+  cursor: grabbing;
+}
+
+.workout-chip:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+.workout-chip small {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.week-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.day-box {
+  background: #1a1a1a;
+  border: 2px dashed #333;
+  border-radius: 12px;
+  padding: 0.75rem;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.day-box.over {
+  border-color: #4ade80;
+  background: #14241a;
+}
+
+.day-box.today {
+  border-style: solid;
+  border-color: #4ade80;
+}
+
+.today-badge {
+  margin-left: 0.5rem;
+  font-size: 0.65rem;
+  background: #4ade80;
+  color: #0a0a0a;
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  vertical-align: middle;
+}
+
+.empty-hint {
+  color: #666;
+  font-size: 0.85rem;
+  margin: 0;
+}

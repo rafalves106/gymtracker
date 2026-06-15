@@ -1,0 +1,105 @@
+.settings-page h2 {
+  margin: 0 0 1rem;
+}
+
+.settings-section {
+  margin-bottom: 1.5rem;
+}
+
+.settings-section h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+  margin: 0 0 0.5rem;
+}
+
+.account-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: #4ade80;
+  color: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.account-info {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 1rem;
+  font-size: 0.9rem;
+}
+
+.account-info dt {
+  color: #888;
+}
+
+.account-info dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+.master-badge {
+  font-size: 0.7rem;
+  background: #14241a;
+  color: #4ade80;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+}
+
+.pref-row {
+  display: flex;
+  justify-content: space-between;
+  background: #1a1a1a;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.pref-value {
+  color: #888;
+}
+
+.pref-hint {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0.5rem 0 0;
+}
+
+.btn-logout {
+  width: 100%;
+  padding: 0.85rem;
+  border: 1px solid #f87171;
+  border-radius: 10px;
+  background: #2a1515;
+  color: #f87171;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-logout:focus-visible {
+  outline: 2px solid #f87171;
+  outline-offset: 2px;
+}
+
+.settings-footer {
+  text-align: center;
+  color: #555;
+  margin-top: 2rem;
+}
