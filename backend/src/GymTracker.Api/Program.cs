@@ -31,14 +31,14 @@ var jwtKey = builder.Configuration["Jwt:Key"]!;
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
   .AddJwtBearer(o =>
   {
-      o.TokenValidationParameters = new TokenValidationParameters
-      {
-          ValidateIssuer = true,
-          ValidateAudience = true,
-          ValidIssuer = builder.Configuration["Jwt:Issuer"],
-          ValidAudience = builder.Configuration["Jwt:Audience"],
-          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-      };
+    o.TokenValidationParameters = new TokenValidationParameters
+    {
+      ValidateIssuer = true,
+      ValidateAudience = true,
+      ValidIssuer = builder.Configuration["Jwt:Issuer"],
+      ValidAudience = builder.Configuration["Jwt:Audience"],
+      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
   });
 builder.Services.AddAuthorization();
 
@@ -52,14 +52,36 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+app.UseExceptionHandler(handler =>
+{
+  handler.Run(async context =>
+  {
+    var feature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+    var ex = feature?.Error;
+
+    var (status, message) = ex switch
+    {
+      UnauthorizedAccessException => (401, ex.Message),
+      KeyNotFoundException => (404, ex.Message),
+      InvalidOperationException => (400, ex.Message),
+      GymTracker.Domain.Common.DomainException => (400, ex!.Message),
+      _ => (500, "Erro interno do servidor.")
+    };
+
+    context.Response.StatusCode = status;
+    context.Response.ContentType = "application/json";
+    await context.Response.WriteAsJsonAsync(new { error = message });
+  });
+});
+
 // Migrações automáticas + seed
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await db.Database.MigrateAsync();
-    await DbSeeder.SeedMasterAsync(db,
-        scope.ServiceProvider.GetRequiredService<IPasswordHasher>(),
-        builder.Configuration);
+  var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+  await db.Database.MigrateAsync();
+  await DbSeeder.SeedMasterAsync(db,
+      scope.ServiceProvider.GetRequiredService<IPasswordHasher>(),
+      builder.Configuration);
 }
 
 if (app.Environment.IsDevelopment()) app.MapOpenApi();
