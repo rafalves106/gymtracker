@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { decodeToken } from "../auth/jwt";
+import { useTheme } from "../theme/useTheme";
 import "../features/settings/Settings.css";
 
 export function SettingsPage() {
   const { token, logout } = useAuth();
   const navigate = useNavigate();
   const user = decodeToken(token);
+  const { theme, toggle } = useTheme();
 
   function handleLogout() {
     logout();
@@ -44,15 +46,21 @@ export function SettingsPage() {
       {/* Preferências (placeholder para refinarmos depois) */}
       <section className="settings-section" aria-labelledby="prefs-title">
         <h3 id="prefs-title">Preferências</h3>
+
         <div className="pref-row">
-          <span>Tema</span>
-          <span className="pref-value">Escuro</span>
+          <span>Tema {theme === "dark" ? "escuro" : "claro"}</span>
+          <button
+            className="theme-toggle"
+            onClick={toggle}
+            role="switch"
+            aria-checked={theme === "light"}
+            aria-label="Alternar tema claro e escuro"
+          >
+            <span className="theme-toggle-thumb">
+              {theme === "dark" ? "🌙" : "☀️"}
+            </span>
+          </button>
         </div>
-        <div className="pref-row">
-          <span>Unidade de peso</span>
-          <span className="pref-value">kg</span>
-        </div>
-        <p className="pref-hint">Mais opções em breve 🔧</p>
       </section>
 
       {/* Sair */}

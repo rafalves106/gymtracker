@@ -10,42 +10,40 @@
 }
 
 .hint {
-  color: #888;
+  color: var(--text-muted);
   font-size: 0.85rem;
   margin: 0 0 1rem;
 }
-
 .empty-state {
   text-align: center;
-  color: #666;
+  color: var(--text-faint);
   padding: 2rem 1rem;
 }
 
-/* Botões reutilizáveis */
 .btn-primary {
   padding: 0.6rem 1.2rem;
   border: none;
-  border-radius: 8px;
-  background: #4ade80;
-  color: #0a0a0a;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-contrast);
   font-weight: 600;
   cursor: pointer;
 }
 
 .btn-secondary {
   padding: 0.6rem 1.2rem;
-  border: 1px solid #444;
-  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   background: transparent;
-  color: inherit;
+  color: var(--text);
   cursor: pointer;
 }
 
 .btn-remove {
-  background: #2a1515;
-  color: #f87171;
+  background: var(--danger-soft);
+  color: var(--danger);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   padding: 0.3rem 0.6rem;
   cursor: pointer;
 }
@@ -54,7 +52,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,8 +61,8 @@
 }
 
 .modal {
-  background: #161616;
-  border-radius: 16px;
+  background: var(--bg-surface);
+  border-radius: var(--radius);
   padding: 1.5rem;
   width: 100%;
   max-width: 440px;
@@ -73,6 +71,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  box-shadow: var(--shadow);
 }
 
 .modal h3 {
@@ -84,23 +83,30 @@
   flex-direction: column;
   gap: 0.35rem;
   font-size: 0.85rem;
+  color: var(--text);
 }
 
 .modal input {
   padding: 0.6rem;
-  border: 1px solid #444;
-  border-radius: 8px;
-  background: #1a1a1a;
-  color: inherit;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  color: var(--text);
 }
 
 .exercises-fieldset {
-  border: 1px solid #333;
-  border-radius: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  min-width: 0; /* evita overflow do grid interno */
+}
+
+.exercises-fieldset legend {
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 
 .exercise-row {
@@ -108,22 +114,23 @@
   flex-direction: column;
   gap: 0.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid #2a2a2a;
+  border-bottom: 1px solid var(--border);
 }
 
 .exercise-nums {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
+  min-width: 0;
+}
+
+.exercise-nums label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
 
 .modal-actions {
   display: flex;
   gap: 0.75rem;
   justify-content: flex-end;
-}
-
-input:focus-visible {
-  outline: 2px solid #4ade80;
-  border-color: #4ade80;
 }

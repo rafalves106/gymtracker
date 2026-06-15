@@ -103,3 +103,33 @@
   color: #555;
   margin-top: 2rem;
 }
+
+.theme-toggle {
+  width: 56px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-muted);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.theme-toggle[aria-checked="true"] {
+  justify-content: flex-end;
+  background: var(--accent-soft);
+}
+
+.theme-toggle-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}

@@ -9,7 +9,7 @@
 .app-content {
   flex: 1;
   padding: 1rem;
-  padding-bottom: 5rem; /* espaço pra nav fixa */
+  padding-bottom: 5rem;
 }
 
 .bottom-nav {
@@ -21,8 +21,8 @@
   max-width: 480px;
   display: flex;
   justify-content: space-around;
-  background: #1a1a1a;
-  border-top: 1px solid #333;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
   padding: 0.5rem 0;
 }
 
@@ -32,18 +32,16 @@
   align-items: center;
   gap: 0.25rem;
   font-size: 0.75rem;
-  color: #888;
+  color: var(--text-muted);
   text-decoration: none;
   padding: 0.25rem 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
+  transition:
+    color 0.15s,
+    background 0.15s;
 }
 
 .nav-item.active {
-  color: #4ade80;
-  background: #222;
-}
-
-.nav-item:focus-visible {
-  outline: 2px solid #4ade80;
-  outline-offset: 2px;
+  color: var(--accent);
+  background: var(--bg-muted);
 }
