@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GymTracker.Api/GymTracker.Api.csproj" />
+    <Project Path="src/GymTracker.Application/GymTracker.Application.csproj" />
+    <Project Path="src/GymTracker.Domain/GymTracker.Domain.csproj" />
+    <Project Path="src/GymTracker.Infrastructure/GymTracker.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GymTracker.IntegrationTests/GymTracker.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dist-ssr/
+.vite/
+.eslintcache
+coverage/
+npm-debug.log*
+.git/
+.gitignore
+README.md
+Dockerfile
+.dockerignore

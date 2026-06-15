@@ -1,0 +1,100 @@
+# ==========================================================
+# GymTracker - .gitignore
+# ==========================================================
+
+# ----------------------------------------------------------
+# 🔐 SEGREDOS E AMBIENTE (NUNCA COMMITAR)
+# ----------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# ----------------------------------------------------------
+# 🟣 .NET / BACKEND
+# ----------------------------------------------------------
+# Artefatos de build
+bin/
+obj/
+out/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+publish/
+
+# Arquivos de usuário / IDE Visual Studio
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# Logs e caches do .NET
+*.log
+project.lock.json
+artifacts/
+.dotnet/
+
+# Resultados de testes
+[Tt]est[Rr]esult*/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage/
+
+# ----------------------------------------------------------
+# 🟢 NODE / FRONTEND (React + Vite)
+# ----------------------------------------------------------
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Cache de ferramentas
+.vite/
+.eslintcache
+.cache/
+.parcel-cache/
+
+# Logs do npm/yarn/pnpm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Cobertura de testes do Vitest
+coverage/
+
+# ----------------------------------------------------------
+# 🐳 DOCKER
+# ----------------------------------------------------------
+# Não ignore o docker-compose.yml nem os Dockerfiles!
+# Apenas overrides locais:
+docker-compose.override.yml
+
+# ----------------------------------------------------------
+# 💻 IDEs / EDITORES
+# ----------------------------------------------------------
+.vscode/
+!.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# ----------------------------------------------------------
+# 🖥️ SISTEMA OPERACIONAL
+# ----------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
