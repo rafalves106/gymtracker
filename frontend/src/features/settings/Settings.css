@@ -10,7 +10,7 @@
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #888;
+  color: var(--text-muted);
   margin: 0 0 0.5rem;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .account-info dt {
-  color: #888;
+  color: var(--text-muted);
 }
 
 .account-info dd {
@@ -72,12 +72,12 @@
 }
 
 .pref-value {
-  color: #888;
+  color: var(--text-muted);
 }
 
 .pref-hint {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--text-muted);
   margin: 0.5rem 0 0;
 }
 
@@ -100,18 +100,19 @@
 
 .settings-footer {
   text-align: center;
-  color: #555;
+  color: var(--text-muted);
   margin-top: 2rem;
 }
 
 .theme-toggle {
-  width: 56px;
-  height: 30px;
+  width: 64px;
+  min-width: 44px;
+  height: 44px;
   border-radius: 999px;
   border: 1px solid var(--border-strong);
   background: var(--bg-muted);
   cursor: pointer;
-  padding: 2px;
+  padding: 4px;
   display: flex;
   align-items: center;
   transition: background 0.2s;
@@ -123,8 +124,8 @@
 }
 
 .theme-toggle-thumb {
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: var(--bg-surface);
   display: flex;

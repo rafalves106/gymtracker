@@ -13,8 +13,14 @@ import "./index.css";
 
 const queryClient = new QueryClient();
 
-const savedTheme = localStorage.getItem("theme") ?? "dark";
-document.documentElement.setAttribute("data-theme", savedTheme);
+const savedTheme = localStorage.getItem("theme");
+const bootTheme =
+  savedTheme === "dark" || savedTheme === "light"
+    ? savedTheme
+    : window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+document.documentElement.setAttribute("data-theme", bootTheme);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
