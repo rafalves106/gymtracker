@@ -1,0 +1,7 @@
+# Override de produção: sem portas expostas (Cloudflare Tunnel acessa via rede interna)
+services:
+db:
+  ports: [] # remove a exposição da 5432
+
+frontend:
+  ports: [] # remove a exposição da 8080 (cloudflared acessa frontend:80 internamente)
