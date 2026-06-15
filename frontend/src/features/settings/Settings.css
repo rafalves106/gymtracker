@@ -124,7 +124,9 @@
   padding: 4px;
   display: flex;
   align-items: center;
-  transition: background 0.2s, filter 0.15s;
+  transition:
+    background 0.2s,
+    filter 0.15s;
 }
 
 .theme-toggle:hover {

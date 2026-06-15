@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "../api/client";
+import { useBackgroundSession } from "../features/session/useBackgroundSession";
 import {
   startSession,
   pauseSession,
@@ -17,8 +18,24 @@ import "../features/session/Session.css";
 
 export function SessionPage() {
   const qc = useQueryClient();
-  const [session, setSession] = useState<Session | null>(null);
-  const [activeWorkout, setActiveWorkout] = useState<Workout | null>(null);
+  const {
+    session: bgSession,
+    activeWorkout: bgWorkout,
+    startSession: bgStartSession,
+    endSession: bgEndSession,
+    updateSession: bgUpdateSession,
+  } = useBackgroundSession();
+  const [session, setSession] = useState<Session | null>(bgSession);
+  const [activeWorkout, setActiveWorkout] = useState<Workout | null>(bgWorkout);
+
+  // Sincroniza com background session storage
+  useEffect(() => {
+    setSession(bgSession);
+  }, [bgSession]);
+
+  useEffect(() => {
+    setActiveWorkout(bgWorkout);
+  }, [bgWorkout]);
 
   // Busca os treinos de hoje
   const { data: todayWorkouts = [], isLoading } = useQuery<Workout[]>({
@@ -31,6 +48,7 @@ export function SessionPage() {
     onSuccess: (s, w) => {
       setSession(s);
       setActiveWorkout(w);
+      bgStartSession(s, w);
     },
   });
 
@@ -53,9 +71,11 @@ export function SessionPage() {
       if (action === "stop" || action === "cancel") {
         setSession(null);
         setActiveWorkout(null);
+        bgEndSession();
         qc.invalidateQueries({ queryKey: ["today"] });
       } else {
         setSession(s);
+        bgUpdateSession(s);
       }
     },
   });
@@ -65,7 +85,10 @@ export function SessionPage() {
       dir === "inc"
         ? incrementSet(session!.id, exId)
         : decrementSet(session!.id, exId),
-    onSuccess: (s) => setSession(s),
+    onSuccess: (s) => {
+      setSession(s);
+      bgUpdateSession(s);
+    },
   });
 
   // ----- Sem sessão ativa: lista os treinos de hoje -----

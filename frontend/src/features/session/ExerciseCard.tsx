@@ -1,4 +1,5 @@
 import { useRestTimer } from "./useRestTimer";
+import { useTimerNotifications } from "./useBackgroundSession";
 import type { Exercise } from "../workouts/types";
 
 type Props = {
@@ -16,7 +17,12 @@ export function ExerciseCard({
   onIncrement,
   onDecrement,
 }: Props) {
-  const timer = useRestTimer(exercise.restSeconds);
+  const { notifyTimerEnded } = useTimerNotifications();
+  const timer = useRestTimer({
+    defaultSeconds: exercise.restSeconds,
+    exerciseId: exercise.id,
+    onTimerEnded: () => notifyTimerEnded(exercise.name),
+  });
   const done = completedSets >= exercise.targetSets;
 
   function handleSetDone() {

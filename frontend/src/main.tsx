@@ -22,6 +22,13 @@ const bootTheme =
       : "dark";
 document.documentElement.setAttribute("data-theme", bootTheme);
 
+// Registra Service Worker para background timer e notificações
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js").catch((err) => {
+    console.warn("Service Worker registration falhou:", err);
+  });
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
