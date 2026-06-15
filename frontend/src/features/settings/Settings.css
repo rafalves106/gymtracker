@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  background: #1a1a1a;
+  background: var(--bg-surface);
   border-radius: 12px;
   padding: 1rem;
 }
@@ -27,8 +27,8 @@
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
-  background: #4ade80;
-  color: #0a0a0a;
+  background: var(--accent);
+  color: var(--accent-contrast);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,8 +56,8 @@
 
 .master-badge {
   font-size: 0.7rem;
-  background: #14241a;
-  color: #4ade80;
+  background: var(--accent-soft);
+  color: var(--accent);
   padding: 0.15rem 0.5rem;
   border-radius: 6px;
 }
@@ -65,7 +65,7 @@
 .pref-row {
   display: flex;
   justify-content: space-between;
-  background: #1a1a1a;
+  background: var(--bg-surface);
   border-radius: 10px;
   padding: 0.85rem 1rem;
   margin-bottom: 0.5rem;
@@ -84,17 +84,26 @@
 .btn-logout {
   width: 100%;
   padding: 0.85rem;
-  border: 1px solid #f87171;
+  border: 1px solid var(--danger);
   border-radius: 10px;
-  background: #2a1515;
-  color: #f87171;
+  background: var(--danger-soft);
+  color: var(--danger);
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
+  transition: filter 0.15s;
+}
+
+.btn-logout:hover {
+  filter: brightness(0.9);
+}
+
+.btn-logout:active {
+  filter: brightness(0.85);
 }
 
 .btn-logout:focus-visible {
-  outline: 2px solid #f87171;
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
@@ -115,7 +124,20 @@
   padding: 4px;
   display: flex;
   align-items: center;
-  transition: background 0.2s;
+  transition: background 0.2s, filter 0.15s;
+}
+
+.theme-toggle:hover {
+  filter: brightness(1.05);
+}
+
+.theme-toggle:active {
+  filter: brightness(0.95);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 .theme-toggle[aria-checked="true"] {
@@ -132,5 +154,5 @@
   align-items: center;
   justify-content: center;
   font-size: 0.85rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-sm);
 }

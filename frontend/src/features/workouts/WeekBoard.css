@@ -22,8 +22,8 @@
   align-items: flex-start;
   gap: 0.15rem;
   padding: 0.6rem 0.9rem;
-  background: #4ade80;
-  color: #0a0a0a;
+  background: var(--accent);
+  color: var(--accent-contrast);
   border: none;
   border-radius: 10px;
   cursor: grab;
@@ -36,13 +36,13 @@
 }
 
 .workout-chip:focus-visible {
-  outline: 3px solid #fff;
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
 .workout-chip small {
   font-size: 0.7rem;
-  opacity: 0.7;
+  color: var(--accent-small);
 }
 
 .week-grid {
@@ -51,8 +51,8 @@
 }
 
 .day-box {
-  background: #1a1a1a;
-  border: 2px dashed #333;
+  background: var(--bg-surface);
+  border: 2px dashed var(--border-strong);
   border-radius: 12px;
   padding: 0.75rem;
   transition:
@@ -61,20 +61,20 @@
 }
 
 .day-box.over {
-  border-color: #4ade80;
-  background: #14241a;
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .day-box.today {
   border-style: solid;
-  border-color: #4ade80;
+  border-color: var(--accent);
 }
 
 .today-badge {
   margin-left: 0.5rem;
   font-size: 0.65rem;
-  background: #4ade80;
-  color: #0a0a0a;
+  background: var(--accent);
+  color: var(--accent-contrast);
   padding: 0.1rem 0.4rem;
   border-radius: 6px;
   vertical-align: middle;
