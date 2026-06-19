@@ -1,0 +1,26 @@
+{
+  "name": "GymTracker - Seu Assistente de Treino",
+  "short_name": "GymTracker",
+  "description": "Rastreie seus treinos com timer inteligente",
+  
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  
+  "theme_color": "#3b82f6",
+  "background_color": "#0f0f0f",
+  
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

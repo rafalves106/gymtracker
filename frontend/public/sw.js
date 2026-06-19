@@ -1,11 +1,47 @@
 const CACHE_NAME = "gymtracker-v1";
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(self.skipWaiting());
+  event.waitUntil(caches.open(CACHE_NAME));
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((name) => name !== CACHE_NAME)
+          .map((name) => caches.delete(name)),
+      );
+    }),
+  );
+  self.clients.claim();
+});
+
+self.addEventListener("fetch", (event) => {
+  const { request } = event;
+
+  // Network first para API
+  if (request.url.includes("/api/")) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, response.clone());
+          });
+          return response;
+        })
+        .catch(() => caches.match(request)),
+    );
+  }
+  // Cache first para assets
+  else {
+    event.respondWith(
+      caches.match(request).then((response) => {
+        return response || fetch(request);
+      }),
+    );
+  }
 });
 
 self.addEventListener("message", (event) => {
