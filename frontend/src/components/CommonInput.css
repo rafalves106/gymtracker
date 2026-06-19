@@ -1,0 +1,98 @@
+.input-wrapper {
+  margin-bottom: var(--space-lg);
+}
+
+.input-wrapper label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--text);
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  font-size: var(--text-base);
+  padding: var(--space-md) var(--space-lg);
+  min-height: var(--touch-min);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-input);
+  color: var(--text);
+  font-family: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.input:-webkit-autofill {
+  -webkit-box-shadow: inset 0 0 0 1000px var(--bg-input) !important;
+  -webkit-text-fill-color: var(--text) !important;
+  caret-color: var(--accent);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.input.input--error {
+  border-color: var(--danger);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.input-toggle-password {
+  position: absolute;
+  right: var(--space-md);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: var(--space-sm);
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.input-toggle-password:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.input-toggle-password:active {
+  color: var(--accent);
+}
+
+.input-error {
+  display: block;
+  color: var(--danger);
+  font-size: var(--text-xs);
+  margin-top: var(--space-sm);
+}
+
+.input-hint {
+  display: block;
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+  margin-top: var(--space-sm);
+}
+
+@media (max-width: 767px) {
+  .input {
+    font-size: 16px !important;
+  }
+}

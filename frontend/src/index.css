@@ -5,6 +5,173 @@
   box-sizing: border-box;
 }
 
+/* ===== Design System Tokens iOS ===== */
+:root {
+  /* Typography */
+  --text-xs: clamp(12px, 2.5vw, 14px);
+  --text-sm: clamp(13px, 2.8vw, 15px);
+  --text-base: 16px;
+  --text-lg: clamp(18px, 3.5vw, 20px);
+  --text-xl: clamp(20px, 4vw, 24px);
+  --text-2xl: clamp(24px, 5vw, 32px);
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+
+  --tracking-tight: -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+
+  /* Spacing + safe-area */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  --safe-top: env(safe-area-inset-top, 0);
+  --safe-right: env(safe-area-inset-right, 0);
+  --safe-bottom: env(safe-area-inset-bottom, 0);
+  --safe-left: env(safe-area-inset-left, 0);
+
+  --viewport-height: 100dvh;
+  --viewport-height-small: 100svh;
+
+  --touch-min: 44px;
+  --touch-lg: 48px;
+
+  /* Theme colors (dark default) */
+  --bg: #0f0f0f;
+  --bg-surface: #1a1a1a;
+  --bg-surface-2: #161616;
+  --bg-input: #2a2a2a;
+  --bg-muted: #333333;
+
+  --text: #ffffff;
+  --text-muted: #a0a0a0;
+  --text-faint: #707070;
+
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-active: #1d4ed8;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(59, 130, 246, 0.12);
+  --accent-small: rgba(255, 255, 255, 0.85);
+
+  --danger: #ef4444;
+  --danger-soft: rgba(239, 68, 68, 0.12);
+  --warning: #f59e0b;
+  --warning-soft: rgba(245, 158, 11, 0.14);
+  --success: #10b981;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --focus-ring: #3b82f6;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-surface: #f9f9f9;
+  --bg-surface-2: #ffffff;
+  --bg-input: #f0f0f0;
+  --bg-muted: #e8e8e8;
+
+  --text: #000000;
+  --text-muted: #666666;
+  --text-faint: #999999;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-active: #1e40af;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(37, 99, 235, 0.12);
+  --accent-small: rgba(255, 255, 255, 0.9);
+
+  --danger: #dc2626;
+  --danger-soft: rgba(220, 38, 38, 0.12);
+  --warning: #d97706;
+  --warning-soft: rgba(217, 119, 6, 0.14);
+  --success: #059669;
+
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.2);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --focus-ring: #2563eb;
+
+  color-scheme: light;
+}
+
+@supports (color-scheme: dark) {
+  :root {
+    color-scheme: dark light;
+  }
+}
+
+/* ===== Base ===== */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  min-height: var(--viewport-height);
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+main {
+  padding-top: calc(var(--safe-top) + var(--space-lg));
+  padding-bottom: calc(var(--safe-bottom) + var(--space-lg));
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+  flex: 1;
+}
+
+header.app-header {
+  padding-top: var(--safe-top);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+footer.app-footer,
+[role="toolbar"] {
+  padding-bottom: calc(var(--safe-bottom) + var(--space-md));
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
 input,
 button,
 textarea,
@@ -17,100 +184,39 @@ textarea,
 select {
   width: 100%;
   max-width: 100%;
+  font-size: var(--text-base);
+  min-height: var(--touch-min);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
-/* ===== Design Tokens — TEMA ESCURO (padrão) ===== */
-:root {
-  --bg: #0a0a0a;
-  --bg-surface: #1a1a1a;
-  --bg-surface-2: #161616;
-  --bg-input: #1a1a1a;
-  --bg-muted: #111111;
-
-  --text: #f5f5f5;
-  --text-muted: #888888;
-  --text-faint: #8a8a8a;
-
-  --border: #2a2a2a;
-  --border-strong: #444444;
-
-  --accent: #4ade80;
-  --accent-contrast: #0a0a0a;
-  --accent-soft: #14241a;
-  --accent-small: rgba(10, 10, 10, 0.85);
-
-  --danger: #f87171;
-  --danger-soft: #2a1515;
-  --warning: #fbbf24;
-  --warning-soft: #2a2410;
-
-  --focus-ring: #60a5fa;
-
-  --radius: 12px;
-  --radius-sm: 8px;
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-
-  color-scheme: dark;
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: inset 0 0 0 1000px var(--bg-input);
+  -webkit-text-fill-color: var(--text);
 }
 
-/* ===== TEMA CLARO ===== */
-[data-theme="light"] {
-  --bg: #f5f6f8;
-  --bg-surface: #ffffff;
-  --bg-surface-2: #ffffff;
-  --bg-input: #ffffff;
-  --bg-muted: #eef0f3;
-
-  --text: #1a1a1a;
-  --text-muted: #6b7280;
-  --text-faint: #9ca3af;
-
-  --border: #e2e5ea;
-  --border-strong: #cbd2da;
-
-  --accent: #16a34a;
-  --accent-contrast: #0a0a0a;
-  --accent-soft: #dcfce7;
-  --accent-small: #052e16;
-
-  --danger: #dc2626;
-  --danger-soft: #fef2f2;
-  --warning: #d97706;
-  --warning-soft: #fffbeb;
-
-  --focus-ring: #1d4ed8;
-
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
-
-  color-scheme: light;
-}
-
-/* ===== Base ===== */
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-/* Foco acessível padrão */
 :focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
+}
+
+@media (max-width: 375px) {
+  body {
+    font-size: var(--text-sm);
+  }
+}
+
+@media (min-width: 390px) {
+  body {
+    font-size: var(--text-base);
+  }
+}
+
+@media (min-width: 430px) {
+  body {
+    font-size: var(--text-lg);
+  }
 }
