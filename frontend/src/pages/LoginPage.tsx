@@ -6,8 +6,15 @@ import { CommonInput } from "../components/CommonInput";
 import "./LoginPage.css";
 import "../components/Spinner.css";
 
-const isValidEmail = (email: string): boolean => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const isValidIdentifier = (identifier: string): boolean => {
+  // Se tem @ ou . (ponto) → valida como email
+  if (identifier.includes("@") || identifier.includes(".")) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+  }
+
+  // Se não tem @ ou . → valida como username
+  // Min 3 caracteres, apenas alfanumérico + underscore
+  return /^[a-zA-Z0-9_]{3,}$/.test(identifier);
 };
 
 const isValidPassword = (password: string): boolean => {
@@ -31,8 +38,16 @@ export function LoginPage() {
   const handleIdentifierChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setIdentifier(value);
-    if (value && !isValidEmail(value)) {
-      setEmailError("E-mail inválido");
+
+    if (value && !isValidIdentifier(value)) {
+      // Mostrar erro específico baseado no tipo de entrada
+      if (value.includes("@") || value.includes(".")) {
+        setEmailError("E-mail inválido (ex: user@domain.com)");
+      } else if (value.length < 3) {
+        setEmailError("Usuário deve ter 3+ caracteres");
+      } else {
+        setEmailError("Apenas letras, números e underscore (_)");
+      }
     } else {
       setEmailError("");
     }
@@ -129,7 +144,11 @@ export function LoginPage() {
           autoComplete={mode === "login" ? "current-password" : "new-password"}
         />
 
-        {error && <div className="error-banner" role="alert">{error}</div>}
+        {error && (
+          <div className="error-banner" role="alert">
+            {error}
+          </div>
+        )}
 
         <button
           type="submit"
