@@ -15,12 +15,25 @@ public sealed class WorkoutsController(WorkoutService service) : ControllerBase
       => Ok(await service.GetAllAsync(UserId, ct));
 
   [HttpGet("today")]
-  public async Task<IActionResult> GetToday(CancellationToken ct)
-      => Ok(await service.GetTodayAsync(UserId, ct));
+  public async Task<IActionResult> GetToday([FromQuery] DayOfWeek? day, CancellationToken ct)
+      => Ok(day is null
+        ? await service.GetTodayAsync(UserId, ct)
+        : await service.GetByDayAsync(UserId, day.Value, ct));
 
   [HttpPost]
   public async Task<IActionResult> Create(CreateWorkoutRequest req, CancellationToken ct)
       => Ok(await service.CreateAsync(UserId, req, ct));
+
+  [HttpPut("{id:guid}")]
+  public async Task<IActionResult> Update(Guid id, UpdateWorkoutRequest req, CancellationToken ct)
+      => Ok(await service.UpdateAsync(UserId, id, req, ct));
+
+  [HttpDelete("{id:guid}")]
+  public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
+  {
+    await service.DeleteAsync(UserId, id, ct);
+    return NoContent();
+  }
 
   [HttpPut("{id:guid}/day")]
   public async Task<IActionResult> AssignDay(Guid id, AssignDayRequest req, CancellationToken ct)

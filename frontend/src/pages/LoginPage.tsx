@@ -77,6 +77,10 @@ export function LoginPage() {
       navigate("/workouts");
     } catch (err) {
       const axiosErr = err as AxiosError<{ error?: string }>;
+      if (axiosErr.code === "ERR_NETWORK") {
+        setError("Sem internet. Conecte-se para entrar pela primeira vez.");
+        return;
+      }
       setError(
         axiosErr.response?.data?.error ??
           "Falha na autenticação. Verifique os dados.",

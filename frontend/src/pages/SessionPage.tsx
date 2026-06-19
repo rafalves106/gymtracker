@@ -31,7 +31,14 @@ export function SessionPage() {
 
   const { data: todayWorkouts = [], isLoading } = useQuery<Workout[]>({
     queryKey: ["today"],
-    queryFn: async () => (await api.get("/workouts/today")).data,
+    queryFn: async () =>
+      (
+        await api.get("/workouts/today", {
+          params: { day: new Date().getDay() },
+        })
+      ).data,
+    refetchOnMount: "always",
+    refetchOnReconnect: true,
   });
 
   const startMut = useMutation({
@@ -129,7 +136,9 @@ export function SessionPage() {
   const activeExercise =
     sortedExercises.find((ex) => ex.id === activeExerciseId) ?? firstPending;
 
-  const nextExercises = sortedExercises.filter((ex) => ex.id !== activeExercise?.id);
+  const nextExercises = sortedExercises.filter(
+    (ex) => ex.id !== activeExercise?.id,
+  );
 
   const totalSets = sortedExercises.reduce((sum, ex) => sum + ex.targetSets, 0);
   const completedSets = sortedExercises.reduce(
@@ -139,7 +148,8 @@ export function SessionPage() {
   const completedExercises = sortedExercises.filter(
     (ex) => setsOf(ex.id) >= ex.targetSets,
   ).length;
-  const progressPct = totalSets > 0 ? Math.round((completedSets / totalSets) * 100) : 0;
+  const progressPct =
+    totalSets > 0 ? Math.round((completedSets / totalSets) * 100) : 0;
 
   return (
     <div className="session-page">
@@ -147,7 +157,8 @@ export function SessionPage() {
         <div>
           <h2>{activeWorkout.name}</h2>
           <p className="session-subtitle">
-            {completedExercises} de {sortedExercises.length} exercícios concluídos
+            {completedExercises} de {sortedExercises.length} exercícios
+            concluídos
           </p>
         </div>
         <span className={`status-badge ${session.status.toLowerCase()}`}>
@@ -155,7 +166,10 @@ export function SessionPage() {
         </span>
       </header>
 
-      <section className="session-progress" aria-label="Progresso geral da sessão">
+      <section
+        className="session-progress"
+        aria-label="Progresso geral da sessão"
+      >
         <div className="progress-row">
           <span>Séries concluídas</span>
           <strong>
@@ -170,7 +184,10 @@ export function SessionPage() {
           aria-valuemax={totalSets}
           aria-valuenow={completedSets}
         >
-          <span className="progress-fill" style={{ width: `${progressPct}%` }} />
+          <span
+            className="progress-fill"
+            style={{ width: `${progressPct}%` }}
+          />
         </div>
       </section>
 
@@ -179,12 +196,19 @@ export function SessionPage() {
           exercise={activeExercise}
           completedSets={setsOf(activeExercise.id)}
           disabled={paused}
-          onIncrement={() => setMut.mutate({ dir: "inc", exId: activeExercise.id })}
-          onDecrement={() => setMut.mutate({ dir: "dec", exId: activeExercise.id })}
+          onIncrement={() =>
+            setMut.mutate({ dir: "inc", exId: activeExercise.id })
+          }
+          onDecrement={() =>
+            setMut.mutate({ dir: "dec", exId: activeExercise.id })
+          }
         />
       ) : null}
 
-      <section className="next-exercises" aria-labelledby="next-exercises-title">
+      <section
+        className="next-exercises"
+        aria-labelledby="next-exercises-title"
+      >
         <h3 id="next-exercises-title">Próximos exercícios</h3>
         {nextExercises.length === 0 ? (
           <p className="next-empty">
@@ -196,7 +220,10 @@ export function SessionPage() {
               const exSets = setsOf(ex.id);
               const exDone = exSets >= ex.targetSets;
               return (
-                <article key={ex.id} className={`next-card ${exDone ? "is-done" : ""}`}>
+                <article
+                  key={ex.id}
+                  className={`next-card ${exDone ? "is-done" : ""}`}
+                >
                   <div className="next-main">
                     <h4>{ex.name}</h4>
                     <p>{ex.targetReps} reps</p>
@@ -236,7 +263,9 @@ export function SessionPage() {
           {paused ? (
             <button
               className="btn-secondary"
-              onClick={() => controlMut.mutate({ action: "resume", id: session.id })}
+              onClick={() =>
+                controlMut.mutate({ action: "resume", id: session.id })
+              }
               disabled={controlMut.isPending}
             >
               Retomar
@@ -244,7 +273,9 @@ export function SessionPage() {
           ) : (
             <button
               className="btn-secondary"
-              onClick={() => controlMut.mutate({ action: "pause", id: session.id })}
+              onClick={() =>
+                controlMut.mutate({ action: "pause", id: session.id })
+              }
               disabled={controlMut.isPending}
             >
               Pausar

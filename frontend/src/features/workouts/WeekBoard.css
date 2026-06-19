@@ -19,6 +19,12 @@
 .workout-chip {
   display: flex;
   flex-direction: column;
+  gap: 0.35rem;
+}
+
+.workout-chip-handle {
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
   gap: 0.15rem;
   padding: 0.6rem 0.9rem;
@@ -31,18 +37,38 @@
   text-align: left;
 }
 
-.workout-chip:active {
+.workout-chip-handle:active {
   cursor: grabbing;
 }
 
-.workout-chip:focus-visible {
+.workout-chip-handle:focus-visible,
+.chip-action:focus-visible {
   outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
-.workout-chip small {
+.workout-chip-handle small {
   font-size: 0.7rem;
   color: var(--accent-small);
+}
+
+.workout-chip-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.chip-action {
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text);
+  font-size: 0.72rem;
+  padding: 0.3rem 0.55rem;
+}
+
+.chip-action.danger {
+  color: var(--danger);
+  border-color: var(--danger);
 }
 
 .week-grid {

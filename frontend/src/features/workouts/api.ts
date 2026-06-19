@@ -14,6 +14,18 @@ export async function createWorkout(input: {
   return data;
 }
 
+export async function updateWorkout(
+  workoutId: string,
+  input: { name: string; exercises: CreateExerciseInput[] },
+): Promise<Workout> {
+  const { data } = await api.put(`/workouts/${workoutId}`, input);
+  return data;
+}
+
+export async function deleteWorkout(workoutId: string): Promise<void> {
+  await api.delete(`/workouts/${workoutId}`);
+}
+
 export async function assignDay(
   workoutId: string,
   day: number | null,

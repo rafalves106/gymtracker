@@ -7,17 +7,27 @@ export const useTimerNotifications = () => {
       navigator.vibrate([200, 100, 200, 100, 400]);
     }
 
+    // Safari/iOS precisa de permissão explícita para notificação.
+    if ("Notification" in window && Notification.permission === "default") {
+      try {
+        await Notification.requestPermission();
+      } catch {
+        // Ignora falhas de permissão e segue apenas com vibração.
+      }
+    }
+
     // 2. Notificação sincronizada (100ms depois)
     setTimeout(async () => {
-      if (
-        "Notification" in window &&
-        Notification.permission === "granted"
-      ) {
-        new Notification("⏱️ Tempo de descanso acabou!", {
-          body: `${exerciseName} está pronto`,
-          icon: "/icon-192.png",
-          badge: "/badge-72.png",
-        });
+      if ("Notification" in window && Notification.permission === "granted") {
+        try {
+          new Notification("⏱️ Tempo de descanso acabou!", {
+            body: `${exerciseName} está pronto`,
+            icon: "/favicon.svg",
+            badge: "/favicon.svg",
+          });
+        } catch {
+          // Em alguns contextos iOS a notificação pode falhar; vibração já cobre feedback.
+        }
       }
     }, 100);
   }, []);

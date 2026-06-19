@@ -1,5 +1,5 @@
 import { useRestTimer } from "./useRestTimer";
-import { useTimerNotifications } from "./useBackgroundSession";
+import { useTimerNotifications } from "./useTimerNotifications";
 import type { Exercise } from "../workouts/types";
 
 type Props = {
@@ -35,7 +35,9 @@ export function ExerciseCard({
   const timeLabel = `${mins}:${secs.toString().padStart(2, "0")}`;
 
   return (
-    <article className={`exercise-card exercise-card-focus ${done ? "done" : ""}`}>
+    <article
+      className={`exercise-card exercise-card-focus ${done ? "done" : ""}`}
+    >
       <header className="exercise-card-head">
         <p className="exercise-eyebrow">Exercício ativo</p>
         <h3>{exercise.name}</h3>
@@ -44,7 +46,11 @@ export function ExerciseCard({
         </span>
       </header>
 
-      <div className="sets-counter" role="group" aria-label={`Séries de ${exercise.name}`}>
+      <div
+        className="sets-counter"
+        role="group"
+        aria-label={`Séries de ${exercise.name}`}
+      >
         <button
           className="counter-btn"
           onClick={onDecrement}
@@ -58,7 +64,9 @@ export function ExerciseCard({
           <span className="sets-display" aria-live="polite">
             {completedSets} / {exercise.targetSets}
           </span>
-          <span className="sets-text">{completedSets} de {exercise.targetSets} séries</span>
+          <span className="sets-text">
+            {completedSets} de {exercise.targetSets} séries
+          </span>
         </div>
 
         <button
@@ -77,7 +85,11 @@ export function ExerciseCard({
           <span className="rest-value">{timeLabel}</span>
         </div>
 
-        <div className="rest-actions" role="group" aria-label="Controles do descanso">
+        <div
+          className="rest-actions"
+          role="group"
+          aria-label="Controles do descanso"
+        >
           {!timer.running ? (
             <button
               onClick={() => timer.start()}

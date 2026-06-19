@@ -40,4 +40,11 @@ public sealed class Workout : Entity
     var ex = _exercises.FirstOrDefault(e => e.Id == exerciseId);
     if (ex is not null) _exercises.Remove(ex);
   }
+
+  public void ReplaceExercises(IEnumerable<(string Name, int Sets, int Reps, int RestSeconds)> exercises)
+  {
+    _exercises.Clear();
+    foreach (var e in exercises)
+      AddExercise(e.Name, e.Sets, e.Reps, e.RestSeconds);
+  }
 }

@@ -26,12 +26,27 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, response.clone());
-          });
+          if (response.ok) {
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, response.clone());
+            });
+          }
           return response;
         })
-        .catch(() => caches.match(request)),
+        .catch(async () => {
+          const cached = await caches.match(request);
+          if (cached) {
+            return cached;
+          }
+
+          return new Response(
+            JSON.stringify({ error: "Sem conexão com a internet" }),
+            {
+              status: 503,
+              headers: { "Content-Type": "application/json" },
+            },
+          );
+        }),
     );
   }
   // Cache first para assets

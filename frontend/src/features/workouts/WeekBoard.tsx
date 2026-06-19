@@ -23,15 +23,21 @@ const DAYS = [
 
 const todayDow = new Date().getDay(); // 0..6
 
-function WorkoutChip({ workout }: { workout: Workout }) {
+function WorkoutChip({
+  workout,
+  onEdit,
+  onDelete,
+}: {
+  workout: Workout;
+  onEdit?: (workout: Workout) => void;
+  onDelete?: (workout: Workout) => void;
+}) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({ id: workout.id });
 
   return (
-    <button
+    <div
       ref={setNodeRef}
-      {...listeners}
-      {...attributes}
       className="workout-chip"
       style={{
         transform: transform
@@ -39,11 +45,36 @@ function WorkoutChip({ workout }: { workout: Workout }) {
           : undefined,
         opacity: isDragging ? 0.5 : 1,
       }}
-      aria-label={`Arrastar treino ${workout.name}. ${workout.exercises.length} exercícios`}
     >
-      <strong>{workout.name}</strong>
-      <small>{workout.exercises.length} exercícios</small>
-    </button>
+      <button
+        {...listeners}
+        {...attributes}
+        className="workout-chip-handle"
+        aria-label={`Arrastar treino ${workout.name}. ${workout.exercises.length} exercícios`}
+      >
+        <strong>{workout.name}</strong>
+        <small>{workout.exercises.length} exercícios</small>
+      </button>
+
+      <div className="workout-chip-actions">
+        <button
+          type="button"
+          className="chip-action"
+          onClick={() => onEdit?.(workout)}
+          aria-label={`Editar treino ${workout.name}`}
+        >
+          Editar
+        </button>
+        <button
+          type="button"
+          className="chip-action danger"
+          onClick={() => onDelete?.(workout)}
+          aria-label={`Excluir treino ${workout.name}`}
+        >
+          Excluir
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -79,9 +110,13 @@ function DayBox({
 export function WeekBoard({
   workouts,
   onAssign,
+  onEdit,
+  onDelete,
 }: {
   workouts: Workout[];
   onAssign: (workoutId: string, day: number | null) => void;
+  onEdit?: (workout: Workout) => void;
+  onDelete?: (workout: Workout) => void;
 }) {
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -104,7 +139,14 @@ export function WeekBoard({
           {unassigned.length === 0 ? (
             <p className="empty-hint">Todos os treinos já têm um dia 👍</p>
           ) : (
-            unassigned.map((w) => <WorkoutChip key={w.id} workout={w} />)
+            unassigned.map((w) => (
+              <WorkoutChip
+                key={w.id}
+                workout={w}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
+            ))
           )}
         </div>
       </section>
@@ -120,7 +162,12 @@ export function WeekBoard({
             {workouts
               .filter((w) => w.scheduledDay === Number(d.id))
               .map((w) => (
-                <WorkoutChip key={w.id} workout={w} />
+                <WorkoutChip
+                  key={w.id}
+                  workout={w}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
               ))}
           </DayBox>
         ))}
