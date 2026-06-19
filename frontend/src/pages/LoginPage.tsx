@@ -4,6 +4,15 @@ import { AxiosError } from "axios";
 import { useAuth } from "../auth/AuthContext";
 import { CommonInput } from "../components/CommonInput";
 import "./LoginPage.css";
+import "../components/Spinner.css";
+
+const isValidEmail = (email: string): boolean => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
+
+const isValidPassword = (password: string): boolean => {
+  return password.length >= 6;
+};
 
 export function LoginPage() {
   const { login, register } = useAuth();
@@ -16,6 +25,28 @@ export function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const handleIdentifierChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setIdentifier(value);
+    if (value && !isValidEmail(value)) {
+      setEmailError("E-mail inválido");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    if (value && !isValidPassword(value)) {
+      setPasswordError("Mínimo 6 caracteres");
+    } else {
+      setPasswordError("");
+    }
+  };
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -52,7 +83,8 @@ export function LoginPage() {
             label="Usuário ou e-mail"
             placeholder="seu@email.com"
             value={identifier}
-            onChange={(e) => setIdentifier(e.target.value)}
+            onChange={handleIdentifierChange}
+            error={emailError}
             required
             autoComplete="email"
             autoCapitalize="none"
@@ -90,8 +122,8 @@ export function LoginPage() {
           label="Senha"
           placeholder="••••••••"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          error={undefined}
+          onChange={handlePasswordChange}
+          error={passwordError}
           required
           showPasswordToggle
           autoComplete={mode === "login" ? "current-password" : "new-password"}
@@ -105,6 +137,7 @@ export function LoginPage() {
           disabled={loading}
           aria-busy={loading}
         >
+          {loading && <span className="spinner" aria-hidden></span>}
           {loading ? "Entrando..." : mode === "login" ? "Entrar" : "Cadastrar"}
         </button>
 
